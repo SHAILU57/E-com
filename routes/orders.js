@@ -2,6 +2,7 @@ const express = require('express');
 const Order = require('../models/Order');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
+const User = require('../models/User');
 const { protect } = require('../middleware/auth');
 
 const router = express.Router();
@@ -86,12 +87,31 @@ router.get('/:id', protect, async (req, res) => {
 
 router.post('/', protect, async (req, res) => {
   try {
-    const { shippingAddress, paymentMethod, items } = req.body;
+    const { shippingAddress, shippingAddressId, paymentMethod, items } = req.body;
 
-    if (!shippingAddress || !paymentMethod) {
+    if (!paymentMethod) {
       return res.status(400).json({
         success: false,
-        message: 'Shipping address and payment method are required'
+        message: 'Payment method is required'
+      });
+    }
+
+    // Validate shipping address
+    let finalShippingAddress = shippingAddress;
+    if (shippingAddressId) {
+      const user = await User.findById(req.user._id);
+      const addressObj = user.addresses.find(addr => addr._id.toString() === shippingAddressId);
+      if (!addressObj) {
+        return res.status(400).json({
+          success: false,
+          message: 'Selected address not found'
+        });
+      }
+      finalShippingAddress = addressObj.toObject ? addressObj.toObject() : addressObj;
+    } else if (!shippingAddress) {
+      return res.status(400).json({
+        success: false,
+        message: 'Shipping address or address ID is required'
       });
     }
 
@@ -162,10 +182,10 @@ router.post('/', protect, async (req, res) => {
     const order = await Order.create({
       user: user._id,
       items: orderItems,
-      shippingAddress,
+      shippingAddress: finalShippingAddress,
       paymentInfo: {
         method: paymentMethod,
-        status: paymentMethod === 'cod' ? 'pending' : 'pending'
+        status: 'pending'
       },
       pricing: {
         subtotal,

@@ -115,5 +115,6 @@ productSchema.index({ name: 'text', description: 'text', tags: 'text' });
 productSchema.index({ category: 1, price: 1 });
 productSchema.index({ 'rating.average': -1 });
 productSchema.index({ isFeatured: 1, createdAt: -1 });
+productSchema.index({ isActive: 1, category: 1 });
 
 module.exports = mongoose.model('Product', productSchema);

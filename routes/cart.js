@@ -89,7 +89,12 @@ router.post('/add', protect, async (req, res) => {
     res.json({
       success: true,
       message: 'Item added to cart successfully',
-      data: { cart }
+      data: { 
+        cart: {
+          ...cart.toObject(),
+          totalAmount: cart.totalAmount
+        }
+      }
     });
   } catch (error) {
     console.error('Add to cart error:', error);
@@ -143,7 +148,12 @@ router.put('/update', protect, async (req, res) => {
     res.json({
       success: true,
       message: 'Cart updated successfully',
-      data: { cart }
+      data: { 
+        cart: {
+          ...cart.toObject(),
+          totalAmount: cart.totalAmount
+        }
+      }
     });
   } catch (error) {
     console.error('Update cart error:', error);
@@ -175,7 +185,12 @@ router.delete('/remove/:productId', protect, async (req, res) => {
     res.json({
       success: true,
       message: 'Item removed from cart successfully',
-      data: { cart }
+      data: { 
+        cart: {
+          ...cart.toObject(),
+          totalAmount: cart.totalAmount
+        }
+      }
     });
   } catch (error) {
     console.error('Remove from cart error:', error);

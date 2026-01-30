@@ -93,4 +93,7 @@ cartSchema.methods.clear = function() {
   this.lastUpdated = Date.now();
 };
 
+// Add indexes for cart queries
+cartSchema.index({ user: 1 });
+
 module.exports = mongoose.model('Cart', cartSchema);
