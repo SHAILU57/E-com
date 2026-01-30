@@ -1,121 +1,91 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect, useHistory } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { CartProvider } from './contexts/CartContext';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Products from './pages/Products';
-import ProductDetail from './pages/ProductDetail';
-import Cart from './pages/Cart';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Profile from './pages/Profile';
-import Orders from './pages/Orders';
-import ProductManagement from './pages/ProductManagement';
-import './App.css';
+import { Container, Box } from '@mui/material';
+import { Toaster } from 'react-hot-toast';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#4f46e5',
-    },
-    secondary: {
-      main: '#8b5cf6',
-    },
-  },
-  typography: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-  },
-});
+// 1. Import your Custom Theme
+import theme from './theme';
 
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isAuthenticated, loading } = useAuth();
-  const history = useHistory();
-  
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  
-  if (!isAuthenticated) {
-    history.push('/login');
-    return null;
-  }
-  
-  return <>{children}</>;
-};
+// 2. Import Layout Components
+import Navbar from './components/Layout/Navbar';
+import Footer from './components/Layout/Footer';
+import Hero from './components/Home/Hero';
 
-const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isAuthenticated, loading } = useAuth();
-  const history = useHistory();
-  
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  
-  if (isAuthenticated) {
-    history.push('/');
-    return null;
-  }
-  
-  return <>{children}</>;
-};
+// 3. Import your Screens (Assuming these exist in your project)
+import HomeScreen from './screens/HomeScreen';
+import ProductScreen from './screens/ProductScreen';
+import CartScreen from './screens/CartScreen';
+import LoginScreen from './screens/LoginScreen';
+// import RegisterScreen from './screens/RegisterScreen'; 
 
-const AppContent: React.FC = () => {
-  return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <main>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/products" component={Products} />
-            <Route path="/product/:id" component={ProductDetail} />
-            <Route path="/cart" component={Cart} />
-            
-            <Route path="/login">
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
-            </Route>
-            <Route path="/register">
-              <PublicRoute>
-                <Register />
-              </PublicRoute>
-            </Route>
-            
-            <Route path="/profile">
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            </Route>
-            <Route path="/orders">
-              <ProtectedRoute>
-                <Orders />
-              </ProtectedRoute>
-            </Route>
-            <Route path="/admin/products">
-              <ProtectedRoute>
-                <ProductManagement />
-              </ProtectedRoute>
-            </Route>
-          </Switch>
-        </main>
-      </div>
-    </Router>
-  );
-};
-
-const App: React.FC = () => {
+const App = () => {
   return (
     <ThemeProvider theme={theme}>
+      {/* CssBaseline normalizes web styles to look consistent */}
       <CssBaseline />
-      <AuthProvider>
-        <CartProvider>
-          <AppContent />
-        </CartProvider>
-      </AuthProvider>
+      
+      {/* Toast Notifications */}
+      <Toaster position="top-center" />
+
+      <Router>
+        {/* HEADER - Always visible */}
+        <Navbar />
+
+        <main style={{ minHeight: '80vh', display: 'flex', flexDirection: 'column' }}>
+          <Routes>
+            
+            {/* --- HOME ROUTE (Hero + Products) --- */}
+            <Route 
+              path="/" 
+              element={
+                <>
+                  <Hero /> {/* Hero sits at top, full width */}
+                  <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+                    <HomeScreen /> {/* Your existing product grid */}
+                  </Container>
+                </>
+              } 
+            />
+
+            {/* --- PRODUCT DETAILS --- */}
+            <Route 
+              path="/product/:id" 
+              element={
+                <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+                  <ProductScreen />
+                </Container>
+              } 
+            />
+
+            {/* --- CART --- */}
+            <Route 
+              path="/cart/:id?" 
+              element={
+                <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
+                  <CartScreen />
+                </Container>
+              } 
+            />
+
+            {/* --- AUTH --- */}
+            <Route 
+              path="/login" 
+              element={
+                <Container maxWidth="xs" sx={{ mt: 8 }}>
+                  <LoginScreen />
+                </Container>
+              } 
+            />
+
+          </Routes>
+        </main>
+
+        {/* FOOTER - Always visible */}
+        <Footer />
+        
+      </Router>
     </ThemeProvider>
   );
 };
