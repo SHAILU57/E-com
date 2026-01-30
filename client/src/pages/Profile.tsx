@@ -7,7 +7,6 @@ import {
   CardContent,
   TextField,
   Button,
-  Grid,
   Avatar,
   Dialog,
   DialogTitle,
@@ -183,8 +182,8 @@ const Profile: React.FC = () => {
             </Button>
           </Box>
 
-          <Grid container spacing={2}>
-            <Grid xs={12} sm={6}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' }, gap: 2 }}>
+            <Box sx={{ gridColumn: { xs: 'span 1', sm: 'span 1' } }}>
               <TextField
                 fullWidth
                 label="Full Name"
@@ -193,8 +192,8 @@ const Profile: React.FC = () => {
                 disabled={!editMode}
                 margin="normal"
               />
-            </Grid>
-            <Grid xs={12} sm={6}>
+            </Box>
+            <Box sx={{ gridColumn: { xs: 'span 1', sm: 'span 1' } }}>
               <TextField
                 fullWidth
                 label="Email"
@@ -203,8 +202,8 @@ const Profile: React.FC = () => {
                 disabled={!editMode}
                 margin="normal"
               />
-            </Grid>
-            <Grid xs={12}>
+            </Box>
+            <Box sx={{ gridColumn: { xs: 'span 1', sm: 'span 2' } }}>
               <TextField
                 fullWidth
                 label="Phone Number"
@@ -213,8 +212,18 @@ const Profile: React.FC = () => {
                 disabled={!editMode}
                 margin="normal"
               />
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
+              <TextField
+                fullWidth
+                label="Phone Number"
+                value={userInfo.phone}
+                onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
+                disabled={!editMode}
+                margin="normal"
+              />
+            </Box>
+          </Box>
         </CardContent>
       </Card>
 
@@ -289,8 +298,8 @@ const Profile: React.FC = () => {
           {editingAddress ? 'Edit Address' : 'Add New Address'}
         </DialogTitle>
         <DialogContent>
-          <Grid container spacing={2}>
-            <Grid xs={12}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' }, gap: 2 }}>
+            <Box sx={{ gridColumn: { xs: 'span 1', sm: 'span 2' } }}>
               <TextField
                 fullWidth
                 label="Street Address"
@@ -299,8 +308,8 @@ const Profile: React.FC = () => {
                 margin="normal"
                 required
               />
-            </Grid>
-            <Grid xs={12} sm={6}>
+            </Box>
+            <Box sx={{ gridColumn: { xs: 'span 1', sm: 'span 1' } }}>
               <TextField
                 fullWidth
                 label="State"
@@ -309,8 +318,8 @@ const Profile: React.FC = () => {
                 margin="normal"
                 required
               />
-            </Grid>
-            <Grid xs={12} sm={6}>
+            </Box>
+            <Box sx={{ gridColumn: { xs: 'span 1', sm: 'span 1' } }}>
               <TextField
                 fullWidth
                 label="City"
@@ -319,8 +328,8 @@ const Profile: React.FC = () => {
                 margin="normal"
                 required
               />
-            </Grid>
-            <Grid xs={12} sm={6}>
+            </Box>
+            <Box sx={{ gridColumn: { xs: 'span 1', sm: 'span 2' } }}>
               <TextField
                 fullWidth
                 label="Country"
@@ -329,8 +338,8 @@ const Profile: React.FC = () => {
                 margin="normal"
                 required
               />
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseAddressDialog}>Cancel</Button>

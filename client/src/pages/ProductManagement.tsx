@@ -19,7 +19,6 @@ import {
   InputAdornment,
   Pagination
 } from '@mui/material';
-import { Grid } from '@mui/material';
 import {
   Add as AddIcon,
   Edit as EditIcon,
@@ -183,9 +182,9 @@ const ProductManagement: React.FC = () => {
         <Typography>Loading...</Typography>
       ) : (
         <>
-          <Grid container spacing={3}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' }, gap: 3 }}>
             {products.map((product) => (
-              <Grid xs={12} sm={6} md={4} lg={3} key={product._id}>
+              <Box key={product._id}>
                 <Card>
                   <CardMedia
                     component="img"
@@ -232,9 +231,9 @@ const ProductManagement: React.FC = () => {
                     </IconButton>
                   </CardActions>
                 </Card>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
 
           {totalPages > 1 && (
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
@@ -255,8 +254,8 @@ const ProductManagement: React.FC = () => {
         </DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
-            <Grid container spacing={2}>
-              <Grid xs={12} sm={6}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' }, gap: 2 }}>
+              <Box sx={{ gridColumn: { xs: 'span 1', sm: 'span 1' } }}>
                 <TextField
                   fullWidth
                   label="Product Name"
@@ -265,8 +264,8 @@ const ProductManagement: React.FC = () => {
                   required
                   margin="normal"
                 />
-              </Grid>
-              <Grid xs={12} sm={6}>
+              </Box>
+              <Box sx={{ gridColumn: { xs: 'span 1', sm: 'span 1' } }}>
                 <TextField
                   fullWidth
                   label="Price"
@@ -277,8 +276,8 @@ const ProductManagement: React.FC = () => {
                   required
                   margin="normal"
                 />
-              </Grid>
-              <Grid xs={12} sm={6}>
+              </Box>
+              <Box sx={{ gridColumn: { xs: 'span 1', sm: 'span 1' } }}>
                 <TextField
                   fullWidth
                   label="Category"
@@ -287,8 +286,8 @@ const ProductManagement: React.FC = () => {
                   required
                   margin="normal"
                 />
-              </Grid>
-              <Grid xs={12} sm={6}>
+              </Box>
+              <Box sx={{ gridColumn: { xs: 'span 1', sm: 'span 1' } }}>
                 <TextField
                   fullWidth
                   label="Stock"
@@ -298,8 +297,8 @@ const ProductManagement: React.FC = () => {
                   required
                   margin="normal"
                 />
-              </Grid>
-              <Grid xs={12}>
+              </Box>
+              <Box sx={{ gridColumn: { xs: 'span 1', sm: 'span 2' } }}>
                 <TextField
                   fullWidth
                   label="Description"
@@ -310,8 +309,8 @@ const ProductManagement: React.FC = () => {
                   required
                   margin="normal"
                 />
-              </Grid>
-              <Grid xs={12}>
+              </Box>
+              <Box sx={{ gridColumn: { xs: 'span 1', sm: 'span 2' } }}>
                 <TextField
                   fullWidth
                   label="Image URL"
@@ -319,8 +318,8 @@ const ProductManagement: React.FC = () => {
                   onChange={(e) => setFormData({ ...formData, image: e.target.value })}
                   margin="normal"
                 />
-              </Grid>
-            </Grid>
+              </Box>
+            </Box>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog}>Cancel</Button>

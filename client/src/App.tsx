@@ -1,92 +1,45 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Container, Box } from '@mui/material';
+import { Container } from '@mui/material';
 import { Toaster } from 'react-hot-toast';
 
-// 1. Import your Custom Theme
-import theme from './theme';
+// Import Pages
+import Home from './pages/Home';
+import Products from './pages/Products';
+import ProductDetail from './pages/ProductDetail';
+import Cart from './pages/Cart';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Profile from './pages/Profile';
+import Orders from './pages/Orders';
+import ProductManagement from './pages/ProductManagement';
 
-// 2. Import Layout Components
+// Import Layout
 import Navbar from './components/Layout/Navbar';
-import Footer from './components/Layout/Footer';
-import Hero from './components/Home/Hero';
-
-// 3. Import your Screens (Assuming these exist in your project)
-import HomeScreen from './screens/HomeScreen';
-import ProductScreen from './screens/ProductScreen';
-import CartScreen from './screens/CartScreen';
-import LoginScreen from './screens/LoginScreen';
-// import RegisterScreen from './screens/RegisterScreen'; 
+import Footer from './components/Layout/Footer'; 
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      {/* CssBaseline normalizes web styles to look consistent */}
-      <CssBaseline />
-      
-      {/* Toast Notifications */}
+    <Router>
+      <Navbar />
+      <Container maxWidth="xl" sx={{ minHeight: '80vh', py: 4 }}>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/products" component={Products} />
+          <Route path="/product/:id" component={ProductDetail} />
+          <Route path="/cart" component={Cart} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/orders" component={Orders} />
+          <Route path="/admin/products" component={ProductManagement} />
+        </Switch>
+      </Container>
+      <Footer />
       <Toaster position="top-center" />
-
-      <Router>
-        {/* HEADER - Always visible */}
-        <Navbar />
-
-        <main style={{ minHeight: '80vh', display: 'flex', flexDirection: 'column' }}>
-          <Routes>
-            
-            {/* --- HOME ROUTE (Hero + Products) --- */}
-            <Route 
-              path="/" 
-              element={
-                <>
-                  <Hero /> {/* Hero sits at top, full width */}
-                  <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
-                    <HomeScreen /> {/* Your existing product grid */}
-                  </Container>
-                </>
-              } 
-            />
-
-            {/* --- PRODUCT DETAILS --- */}
-            <Route 
-              path="/product/:id" 
-              element={
-                <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
-                  <ProductScreen />
-                </Container>
-              } 
-            />
-
-            {/* --- CART --- */}
-            <Route 
-              path="/cart/:id?" 
-              element={
-                <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
-                  <CartScreen />
-                </Container>
-              } 
-            />
-
-            {/* --- AUTH --- */}
-            <Route 
-              path="/login" 
-              element={
-                <Container maxWidth="xs" sx={{ mt: 8 }}>
-                  <LoginScreen />
-                </Container>
-              } 
-            />
-
-          </Routes>
-        </main>
-
-        {/* FOOTER - Always visible */}
-        <Footer />
-        
-      </Router>
-    </ThemeProvider>
+    </Router>
   );
 };
 

@@ -12,7 +12,6 @@ import {
   CircularProgress,
   Alert
 } from '@mui/material';
-import { Grid } from '@mui/material';
 import { ShoppingCart, Star } from '@mui/icons-material';
 import { useHistory } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
@@ -124,9 +123,9 @@ const Home: React.FC = () => {
             No featured products available at the moment.
           </Typography>
         ) : (
-          <Grid container spacing={4}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' }, gap: 4 }}>
             {featuredProducts.map((product) => (
-              <Grid xs={12} sm={6} md={4} lg={3} key={product._id}>
+              <Box key={product._id}>
                 <Card
                   sx={{
                     height: '100%',
@@ -200,9 +199,9 @@ const Home: React.FC = () => {
                     </Button>
                   </CardActions>
                 </Card>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
         )}
       </Box>
 
@@ -211,9 +210,9 @@ const Home: React.FC = () => {
         <Typography variant="h4" component="h2" gutterBottom>
           Shop by Category
         </Typography>
-        <Grid container spacing={2}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(3, 1fr)', md: 'repeat(4, 1fr)' }, gap: 2 }}>
           {['Electronics', 'Clothing', 'Books', 'Home', 'Sports', 'Toys', 'Beauty'].map((category) => (
-            <Grid xs={6} sm={4} md={3} key={category}>
+            <Box key={category}>
               <Card
                 sx={{
                   textAlign: 'center',

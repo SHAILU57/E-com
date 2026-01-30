@@ -16,8 +16,7 @@ import {
   DialogActions,
   CircularProgress,
   Alert,
-  Divider,
-  Grid
+  Divider
 } from '@mui/material';
 import {
   Add,
@@ -103,13 +102,13 @@ const Cart: React.FC = () => {
           </Button>
         </Box>
       ) : (
-        <Grid container spacing={4}>
-          <Grid xs={12} md={8}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '2fr 1fr' }, gap: 4 }}>
+          <Box>
             {items.map((item) => (
               <Card key={item.product._id} sx={{ mb: 2 }}>
                 <CardContent>
-                  <Grid container spacing={2} alignItems="center">
-                    <Grid xs={12} sm={3}>
+                  <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'auto 1fr auto' }, gap: 2, alignItems: 'center' }}>
+                    <Box>
                       <CardMedia
                         component="img"
                         height="100"
@@ -117,18 +116,18 @@ const Cart: React.FC = () => {
                         alt={item.product.name}
                         sx={{ objectFit: 'cover', borderRadius: 1 }}
                       />
-                    </Grid>
+                    </Box>
                     
-                      <Grid xs={12} sm={5}>
+                      <Box>
                        <Typography variant="h6" gutterBottom>
                          {item.product.name}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         {item.product.description}
                         </Typography>
-                     </Grid>
+                     </Box>
                     
-                    <Grid xs={12} sm={4}>
+                    <Box>
                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
                         <IconButton
                           size="small"
@@ -167,14 +166,14 @@ const Cart: React.FC = () => {
                           <Delete />
                         </IconButton>
                       </Box>
-                    </Grid>
-                  </Grid>
+                    </Box>
+                  </Box>
                 </CardContent>
               </Card>
             ))}
-          </Grid>
+          </Box>
 
-          <Grid xs={12} md={4}>
+          <Box>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -230,8 +229,8 @@ const Cart: React.FC = () => {
                 </Button>
               </CardContent>
             </Card>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       )}
 
       {/* Checkout Dialog */}

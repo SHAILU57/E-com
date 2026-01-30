@@ -24,7 +24,6 @@ import {
   IconButton,
   LinearProgress
 } from '@mui/material';
-import { Grid } from '@mui/material';
 import {
   LocalShipping as ShippingIcon,
   CheckCircle as DeliveredIcon,
@@ -178,9 +177,9 @@ const Orders: React.FC = () => {
           </Typography>
         </Paper>
       ) : (
-        <Grid container spacing={3}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }, gap: 3 }}>
           {orders.map((order) => (
-            <Grid xs={12} md={6} lg={4} key={order._id}>
+            <Box key={order._id}>
               <Card>
                 <CardContent>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
@@ -253,9 +252,9 @@ const Orders: React.FC = () => {
                   </Box>
                 </CardContent>
               </Card>
-            </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Box>
       )}
 
       {totalPages > 1 && (

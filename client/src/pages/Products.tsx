@@ -20,7 +20,6 @@ import {
   Pagination,
   Fab
 } from '@mui/material';
-import { Grid } from '@mui/material';
 import { ShoppingCart, Star, FilterList } from '@mui/icons-material';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
@@ -208,8 +207,8 @@ const Products: React.FC = () => {
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Filters */}
       <Box sx={{ mb: 4, p: 2, bgcolor: 'background.paper', borderRadius: 2 }}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid xs={12} md={3}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: 'repeat(5, 1fr)' }, gap: 2, alignItems: 'flex-end' }}>
+          <Box sx={{ gridColumn: { xs: 'span 1', md: 'span 1' } }}>
             <TextField
               fullWidth
               label="Search products"
@@ -217,8 +216,8 @@ const Products: React.FC = () => {
               onChange={(e) => handleFilterChange('search', e.target.value)}
               size="small"
             />
-          </Grid>
-          <Grid xs={12} md={2}>
+          </Box>
+          <Box sx={{ gridColumn: { xs: 'span 1', md: 'span 1' } }}>
             <FormControl fullWidth size="small">
               <InputLabel>Category</InputLabel>
               <Select
@@ -232,8 +231,8 @@ const Products: React.FC = () => {
                 ))}
               </Select>
             </FormControl>
-          </Grid>
-          <Grid xs={12} md={2}>
+          </Box>
+          <Box sx={{ gridColumn: { xs: 'span 1', md: 'span 1' } }}>
             <FormControl fullWidth size="small">
               <InputLabel>Brand</InputLabel>
               <Select
@@ -247,8 +246,8 @@ const Products: React.FC = () => {
                 ))}
               </Select>
             </FormControl>
-          </Grid>
-          <Grid xs={12} md={3}>
+          </Box>
+          <Box sx={{ gridColumn: { xs: 'span 1', md: 'span 1' } }}>
             <Typography gutterBottom>Price Range: ₹{filters.minPrice} - ₹{filters.maxPrice}</Typography>
             <Slider
               value={[filters.minPrice, filters.maxPrice]}
@@ -262,8 +261,8 @@ const Products: React.FC = () => {
               step={500}
               valueLabelDisplay="auto"
             />
-          </Grid>
-          <Grid xs={12} md={2}>
+          </Box>
+          <Box sx={{ gridColumn: { xs: 'span 1', md: 'span 1' } }}>
             <FormControl fullWidth size="small">
               <InputLabel>Min Rating</InputLabel>
               <Select
@@ -277,8 +276,8 @@ const Products: React.FC = () => {
                 <MenuItem value={4.5}>4.5+ Stars</MenuItem>
               </Select>
             </FormControl>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Box>
 
       {error && (
@@ -299,9 +298,9 @@ const Products: React.FC = () => {
             Showing {products.length} of {pagination.total} products
           </Typography>
 
-          <Grid container spacing={3}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' }, gap: 3 }}>
             {products.map((product) => (
-              <Grid xs={12} sm={6} md={4} lg={3} key={product._id}>
+              <Box key={product._id}>
                 <Card
                   sx={{
                     height: '100%',
@@ -377,9 +376,9 @@ const Products: React.FC = () => {
                     </Button>
                   </CardActions>
                 </Card>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
 
           {pagination.pages > 1 && (
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>

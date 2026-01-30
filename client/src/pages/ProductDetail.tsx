@@ -19,7 +19,6 @@ import {
   Divider,
   Chip
 } from '@mui/material';
-import { Grid } from '@mui/material';
 import {
   ShoppingCart,
   Add,
@@ -139,8 +138,8 @@ const ProductDetail: React.FC = () => {
         Back to Products
       </Button>
 
-      <Grid container spacing={4}>
-        <Grid xs={12} md={6}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 4 }}>
+        <Box>
           <Box>
             {/* Main Image */}
             <CardMedia
@@ -178,7 +177,7 @@ const ProductDetail: React.FC = () => {
           </Box>
         </Grid>
 
-        <Grid xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           <Box>
             {/* Title and Price */}
             <Typography variant="h4" component="h1" gutterBottom>
@@ -282,18 +281,18 @@ const ProductDetail: React.FC = () => {
                 <Typography variant="h6" gutterBottom>
                   Specifications
                 </Typography>
-                <Grid container spacing={2}>
+                <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' }, gap: 2 }}>
                   {Array.from(product.specifications.entries()).map(([key, value]) => (
-                    <Grid xs={12} sm={6} key={key}>
+                    <Box key={key}>
                       <Typography variant="body2" color="text.secondary">
                         {key}:
                       </Typography>
                       <Typography variant="body1">
                         {value}
                       </Typography>
-                    </Grid>
+                    </Box>
                   ))}
-                </Grid>
+                </Box>
               </Box>
             )}
 
@@ -311,8 +310,8 @@ const ProductDetail: React.FC = () => {
               </Box>
             )}
           </Box>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* Reviews Section */}
       {product.reviews.length > 0 && (
@@ -320,9 +319,9 @@ const ProductDetail: React.FC = () => {
           <Typography variant="h4" component="h2" gutterBottom>
             Customer Reviews
           </Typography>
-          <Grid container spacing={3}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 3 }}>
             {product.reviews.map((review) => (
-              <Grid xs={12} md={6} key={review._id}>
+              <Box key={review._id}>
                 <Card>
                   <CardContent>
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
@@ -339,9 +338,9 @@ const ProductDetail: React.FC = () => {
                     </Typography>
                   </CardContent>
                 </Card>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Box>
         </Box>
       )}
     </Container>
